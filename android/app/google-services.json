@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "100484253328",
+    "project_id": "slideride-7a51d",
+    "storage_bucket": "slideride-7a51d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100484253328:android:3131394236c14aaf87fa15",
+        "android_client_info": {
+          "package_name": "com.projectmaster.SlideRide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100484253328-1q42obv2q42rr2fidcj499356v5t586f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7aC-LEnl_2LEPu-mKIrcVEW8X1qiqdEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100484253328-1q42obv2q42rr2fidcj499356v5t586f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

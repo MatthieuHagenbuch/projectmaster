@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^3.1.8
 
   flutter_launcher_icons: "^0.9.2"
+  firebase_auth: ^3.4.2
 
 # Must add "flutter.minSdkVersion=30" in android/local.properties to work
 flutter_icons:

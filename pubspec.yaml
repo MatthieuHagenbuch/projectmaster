@@ -40,6 +40,7 @@ dependencies:
 
   flutter_launcher_icons: "^0.9.2"
   firebase_auth: ^3.4.2
+  flutterfire_ui: ^0.4.2+3
 
 # Must add "flutter.minSdkVersion=30" in android/local.properties to work
 flutter_icons:
@@ -73,8 +74,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+     - assets/icons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

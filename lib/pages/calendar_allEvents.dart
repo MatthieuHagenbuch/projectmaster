@@ -42,7 +42,6 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     });
   }
   
-  
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,9 @@ class CalendarDisplayState extends State<CalendarDisplay> {
             ),
         ),
         floatingActionButton: 
-        FloatingActionButton(onPressed: () {}, child: Text('add'), backgroundColor: Colors.cyan
+        FloatingActionButton(onPressed: () {
+        
+        }, child: Text('add'), backgroundColor: Colors.cyan
         ),
     );
   } 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projectmaster/Authentication/AuthGate.dart';
-import 'package:projectmaster/event/getData.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: AuthGate(),
+      home: AuthGate(),
 
       /*title: 'Flutter Demo',
       theme: ThemeData(
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),*/
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -69,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      getData();
     });
   }
 

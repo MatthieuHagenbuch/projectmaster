@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:projectmaster/models/event.dart';
+import 'package:projectmaster/pages/calendar_createEvent2.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CalendarDisplay extends StatefulWidget {
@@ -56,9 +57,12 @@ class CalendarDisplayState extends State<CalendarDisplay> {
           dataSource: events,
             ),
         ),
-        floatingActionButton: 
-        FloatingActionButton(onPressed: () {
-        
+        floatingActionButton: FloatingActionButton(onPressed: () {
+         Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  const AddEvent2(),
+                    ));
         }, child: Text('add'), backgroundColor: Colors.cyan
         ),
     );

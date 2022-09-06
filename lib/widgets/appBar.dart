@@ -1,4 +1,6 @@
 // author Océane
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +19,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           size: 20,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          //Navigator.pop(context);
         },
       ),
       backgroundColor: Colors.white,
@@ -30,6 +32,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w800,
         ),
       ),
+      actions: const [TextButton(onPressed: signOut, child: Text('Log out'))],
     );
   }
+}
+
+signOut() async {
+  await FirebaseAuth.instance.signOut();
+  // Navigator.pushReplacement(
+  //     context, MaterialPageRoute(builder: (context) => SignInScreen()));
 }

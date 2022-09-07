@@ -50,6 +50,7 @@ dependencies:
   google_fonts: ^3.0.1
   table_calendar: ^3.0.6
   syncfusion_flutter_calendar: ^20.2.46
+  transparent_image: ^2.0.0
 
 
 # Must add "flutter.minSdkVersion=30" in android/local.properties to work

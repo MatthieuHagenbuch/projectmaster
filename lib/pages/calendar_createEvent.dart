@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:projectmaster/models/event.dart';
 import 'package:projectmaster/widgets/appBar.dart';
 
 const dhint = 'Choose';
 
-class AddEvent2 extends StatefulWidget {
-  const AddEvent2({Key? key}) : super(key: key);
+class AddEvent extends StatefulWidget {
+  const AddEvent({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AddEvent2State();
+  State<StatefulWidget> createState() => _AddEventState();
 }
 @override
-class _AddEvent2State extends State<AddEvent2> {
+class _AddEventState extends State<AddEvent> {
   var _Field = <Widget>[];
 
   final formKey = GlobalKey<FormState>();
@@ -32,11 +31,10 @@ class _AddEvent2State extends State<AddEvent2> {
       return DateFormat('MM/dd/yyyy').format(date);
   }
 
-
   late VoidCallback onClicked;
-  String? _activity;
   
-
+  String? _activity;
+ 
 // declare constant for drop-down menus
   static const activityItems = <String>['Rando', 'Free'];
 
@@ -52,12 +50,6 @@ class _AddEvent2State extends State<AddEvent2> {
     
   @override
   Widget build(BuildContext context) {
-    EventsModel items = EventsModel(
-      activity: _activity,
-      startEvent: date,
-    );
-
-
 
     return Scaffold(
         appBar: const MyAppBar(),
@@ -65,7 +57,7 @@ class _AddEvent2State extends State<AddEvent2> {
           key: formKey,
           children: [
             ListTile(
-              leading: Icon(Icons.calendar_month),
+              leading: const Icon(Icons.calendar_month),
               title: const Text('Date'),
               textColor: Colors.black,
               trailing: 
@@ -90,18 +82,7 @@ class _AddEvent2State extends State<AddEvent2> {
 
               ),
             ),
-            TextFormField(
-            controller: activityController,
-            validator: (activity) {
-              if (activity!.isEmpty) {
-                return "Address is required";
-              }
-             
-            }
-          ),
-
-
-
+          
             FloatingActionButton(
               backgroundColor: Colors.cyan,
               child: const Icon(Icons.add),

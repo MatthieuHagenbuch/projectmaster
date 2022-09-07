@@ -1,8 +1,9 @@
 // Author - Océane
 
 import 'package:flutter/material.dart';
-import 'package:projectmaster/pages/calendar_allEvents.dart';
 import 'package:projectmaster/widgets/appbar.dart';
+import 'calendar_allEvents.dart';
+
 
 // Page to call calendar
 class CalendarPage extends StatelessWidget {
@@ -12,6 +13,7 @@ class CalendarPage extends StatelessWidget {
     return const Scaffold(
       appBar: MyAppBar(),
       body: CalendarDisplay(),
+      //body: LoadDataFromFireStore()
     );
   }
 }

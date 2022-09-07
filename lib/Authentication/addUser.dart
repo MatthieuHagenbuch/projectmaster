@@ -5,10 +5,12 @@ import 'package:projectmaster/models/users.dart';
 Future<void> addUser(String? email, String? uId) async {
   var db = FirebaseFirestore.instance;
 
-  db.collection("users").where("uId", isEqualTo: uId).get().then(
-        (res) => print("User already in FireStore"),
-        onError: (e) => db
-            .collection("users")
-            .add({'email': email, 'uId': uId, 'role': "user"}),
-      );
+  db.collection("users").where("uId", isEqualTo: uId).get().then((value) => {
+        if (value.size == 0)
+          {
+            db
+                .collection("users")
+                .add({'email': email, 'uId': uId, 'role': "user"}),
+          }
+      });
 }

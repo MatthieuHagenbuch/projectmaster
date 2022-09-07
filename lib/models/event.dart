@@ -1,32 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventsModel{
 
-  
-  final String? activity;
-  final DateTime? startEvent;
+  late final String activity;
+  final DateTime startEvent;
+  final DateTime endEvent;
+  late final String aditionalInfo;
+  final String course;
+  final String language;
+  final String location;
+  final int price;
+  final String sport;
+  final int numberOfPeopleMin;
+  final int numberOfPeopleMax;
 
-
-  EventsModel({this.activity, this.startEvent});
-
-
-  factory EventsModel.fromJson(Map<String, dynamic> json) =>
-      _eventFromJson(json);
- 
- 
-  Map<String, dynamic> toJson() => _eventToJson(this);
+  EventsModel({required this.activity, required this.startEvent, required this.endEvent, required this.aditionalInfo,required this.course,required this.language,
+  required this.location, required this.price, required this.sport, required this.numberOfPeopleMin, required this.numberOfPeopleMax});
 
 }
-
-EventsModel _eventFromJson(Map<String, dynamic> json) {
-  return EventsModel(
-    activity : (json['activity'] as String),
-    startEvent: (json['startEvent'] as Timestamp).toDate(),
-  );
-}
-
-Map<String, dynamic> _eventToJson(EventsModel instance) =>
-    <String, dynamic>{
-      'activity': instance.activity,
-      'date': instance.startEvent,
-    };

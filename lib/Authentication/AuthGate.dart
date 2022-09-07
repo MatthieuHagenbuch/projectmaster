@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:projectmaster/Authentication/addUser.dart';
 import 'package:projectmaster/pages/calendar_main.dart';
 
 import '../main.dart';
@@ -27,10 +28,14 @@ class AuthGate extends StatelessWidget {
                   ),
                 );
               },
-              providerConfigs: [
+              providerConfigs: const [
                 EmailProviderConfiguration(),
               ]);
         }
+
+        //Add user data in Firebase
+        addUser(FirebaseAuth.instance.currentUser?.email,
+            FirebaseAuth.instance.currentUser?.uid);
 
         // Render your application if authenticated
         return const CalendarPage();

@@ -39,6 +39,4 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 signOut() async {
   await FirebaseAuth.instance.signOut();
-  // Navigator.pushReplacement(
-  //     context, MaterialPageRoute(builder: (context) => SignInScreen()));
 }

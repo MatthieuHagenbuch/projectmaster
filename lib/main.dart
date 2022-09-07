@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
      return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Slide - Ride',
-      //home: CalendarPage(),
-      home: AuthGate(),
+      home: CalendarPage(),
+      //home: AuthGate(),
     );
   }
 }*/

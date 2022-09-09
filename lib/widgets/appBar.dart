@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,11 +7,10 @@ import 'package:projectmaster/pages/Settings/settings_details.dart';
 
 import 'package:projectmaster/pages/Reservation/reservation_allReservation.dart';
 
-
 /*
- Author : Océane - Matthieu
- 
-*/
+  Author : Océane - Matthieu
+  
+  */
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({Key? key}) : super(key: key);
 
@@ -59,15 +57,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               case 0:
                 signOut();
                 break;
+
               case 1:
-                CalendarDisplay(FirebaseAuth.instance.currentUser?.uid);
-                break;
-              case 2: Navigator.push(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AllEventsDisplay(),           
-               ));
-               break;
+                      builder: (context) => CalendarDisplay(
+                          FirebaseAuth.instance.currentUser?.uid),
+                    ));
+                break;
+              case 2:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AllEventsDisplay(),
+                    ));
+                break;
               case 3:
                 Navigator.push(
                     context,
@@ -79,7 +84,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
         )
       ],
-    
+
       //actions: const [TextButton(onPressed: signOut, child: Text('Log out'))],
     );
   }
@@ -88,5 +93,3 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 signOut() async {
   await FirebaseAuth.instance.signOut();
 }
-
-

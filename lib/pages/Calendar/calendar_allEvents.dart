@@ -1,23 +1,21 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:projectmaster/pages/Authentification/addUser.dart';
 import 'package:projectmaster/models/event.dart';
-import 'package:projectmaster/models/users.dart';
 import 'package:projectmaster/pages/Calendar/calendar_createEvent.dart';
 import 'package:projectmaster/widgets/appBar.dart';
-
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-import '../Authentification/AuthGate.dart';
 import 'calendar_detailsEvents.dart';
 
+/*
+ Author : Océane
+ Display calendar with events load from Firestore
+*/
 class CalendarDisplay extends StatefulWidget {
 
   final String? uId;
-  CalendarDisplay(this.uId);
+  // ignore: use_key_in_widget_constructors
+  const CalendarDisplay(this.uId);
  
   @override
   CalendarDisplayState createState() => CalendarDisplayState();
@@ -25,14 +23,12 @@ class CalendarDisplay extends StatefulWidget {
 
 class CalendarDisplayState extends State<CalendarDisplay> {
 
- List<Color> _colorCollection = <Color>[];
  MeetingDataSource? events;    
- var userRole1;
+ var userRole;
  var id;
- bool isInitialLoaded = false;
-
-
-  final databaseReference = FirebaseFirestore.instance;
+ var userName;
+ 
+ final databaseReference = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -51,7 +47,8 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     
     super.initState();
   }
-   var pickId;
+   
+  // Retrieve the "events" collection from firestore in a list
   Future<void> getDataFromFireStore() async {
     var snapShotsValue = await databaseReference
         .collection("events")
@@ -69,10 +66,9 @@ class CalendarDisplayState extends State<CalendarDisplay> {
                location : e.data()['location'].toString(),
                 price : e.data()['price'].toDouble(),
                 sport : e.data()['sport'].toString(),
-                numberOfPeopleMin : e.data()['numberOfPeopleMin'],
                 numberOfPeopleMax : e.data()['numberOfPeopleMax'],
                 numberOfPeople : e.data()['numberOfPeople'],
-                
+                 picture : e.data()['picture'],
                 ))
                
         .toList();
@@ -82,25 +78,24 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     });
   }
 
-  
+  // Retrieve "role" and "id" the "users" collection from firestore 
 Future<void> getUserRole(uId) async {
     FirebaseFirestore.instance
         .collection("users")
         .where("uId", isEqualTo: uId)
         .get()
         .then((value) => {
+           // ignore: unnecessary_null_comparison
            if (value != null)
-           {
-            
-            userRole1 = value.docs.first.data()['role'].toString(),
+           {    
+            userRole = value.docs.first.data()['role'].toString(),
             id = value.docs.first.id,
            }else{
+            // ignore: avoid_print
             print('Document does not exist on the database'),
            }
         });
 }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +103,7 @@ Future<void> getUserRole(uId) async {
       appBar: MyAppBar(),
       body : Center(
 
+        //Use library syncfusion_flutter_calendar to build Calendar
          child : SfCalendar(
                 view: CalendarView.month,
                 firstDayOfWeek: 1,
@@ -132,20 +128,19 @@ Future<void> getUserRole(uId) async {
           ), 
           
           todayHighlightColor: Colors.cyan,
-          //add collection
          ),
          ),
+         
+         //Do not let the user add an event
          floatingActionButton: FloatingActionButton(
           onPressed: () {
-          String uId;
-          
 
-          if(userRole1 == 'client'){
+          if(userRole == 'client'){
             showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
                 title: const Text('No access'),
-                content: const Text('Sorry, you not access to add on event'),
+                content: const Text('Sorry, you can not add on event'),
                 actions: <Widget>[
                   TextButton(onPressed: () =>
                    Navigator.pop(context, 'OK'),
@@ -164,28 +159,28 @@ Future<void> getUserRole(uId) async {
                     ));
           }
          },
-        //child: const Text('+'),
-        child : Icon(Icons.add),
-        backgroundColor: Colors.cyan
+        backgroundColor: Colors.cyan,
+        child : const Icon(Icons.add)
          ),
          
     );
   }
   
+  // Access the details of an event by taking the fields with
   void calendarTapped(CalendarTapDetails calendarTapDetails, ) {
-  if (calendarTapDetails.targetElement == CalendarElement.appointment ||
-      calendarTapDetails.targetElement == CalendarElement.agenda) {
+  if (calendarTapDetails.targetElement == CalendarElement.appointment) {
       EventsModel appointmentDetails = calendarTapDetails.appointments![0];
      
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ManageEvent(eventDetails:appointmentDetails, uId: id,)),
+      MaterialPageRoute(builder: (context) => ManageEvent(eventDetails:appointmentDetails, uId: id)),
     );
   }
 }
 }
 
+// Allows you to display the different information on the calendar
 class MeetingDataSource extends CalendarDataSource {
   
   MeetingDataSource(List<EventsModel> source) {

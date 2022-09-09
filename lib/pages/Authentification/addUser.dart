@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:projectmaster/models/users.dart';
 
 //This method add the user infos in FireStore DB if it dosen't exist alreadyq
 Future<String> addUser(String? email, String? uId) async {

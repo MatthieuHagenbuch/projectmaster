@@ -1,20 +1,25 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:projectmaster/models/event.dart';
+import 'package:projectmaster/pages/Calendar/calendar_allEvents.dart';
 import 'package:projectmaster/widgets/appBar.dart';
 
 import 'package:transparent_image/transparent_image.dart'
+
+/*
+ Author : Océane
+ Display page with detail about one event selected
+*/
 
 show kTransparentImage;
 class ManageEvent extends StatelessWidget {
 
 final String? uId;
 EventsModel? eventDetails;
-ManageEvent({this.eventDetails, required this.uId});
+ManageEvent({Key? key, this.eventDetails, required this.uId}) : super(key: key);
 List<String> eventsByUser = [];
 
  @override
@@ -55,9 +60,6 @@ List<String> eventsByUser = [];
           ),
         ),
 
-        
-     
-        // ADD EDIT DATE AND TIME https://www.syncfusion.com/kb/11204/how-to-design-and-configure-your-appointment-editor-in-flutter-calendar
         ListTile(
             contentPadding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
             leading: const Icon(Icons.calendar_month),
@@ -156,7 +158,7 @@ List<String> eventsByUser = [];
             title: const Text('MinPeople'),
 
           subtitle: Text(
-            eventDetails!.numberOfPeopleMin.toString(),
+            eventDetails!.numberOfPeople.toString(),
         ),
         ),
          ListTile(
@@ -186,21 +188,15 @@ List<String> eventsByUser = [];
           subtitle: Text(
             eventDetails!.aditionalInfo,
         ),
-        ),
-
-
-        const Divider(
-          height: 1.0,
-          thickness: 1,
-        ),
-         
-            ],
-            
-        ),
-        
+        ),     
+            ],         
+        ),   
        ),
+
+       //User can subscribe in an event
+          // - if event is full, the user is not subscribe
        floatingActionButton: FloatingActionButton.extended(onPressed: (){
-        var result = addPeople(eventDetails!.id,eventDetails!.numberOfPeople, 
+        var result = addPerson(eventDetails!.id,eventDetails!.numberOfPeople, 
         eventDetails!.price, eventDetails!.numberOfPeopleMax, uId);
         switch (result){
           case (-1) :
@@ -225,7 +221,7 @@ List<String> eventsByUser = [];
                 content: const Text('Thank you for your registration. You can find the different information about your registration under the tab "My reservations" '),
                 actions: <Widget>[
                   TextButton(onPressed: () =>
-                   Navigator.pop(context, 'OK'),
+                   Navigator.pop(context, CalendarDisplay(uId)),
                    child: const Text('OK'),
                   ),
                 ],
@@ -233,20 +229,18 @@ List<String> eventsByUser = [];
             );
         }
           },
-        label: Text('Subscribe'),
+        label: const Text('Subscribe'),
         backgroundColor: Colors.cyan
     ),
     );
     
   }
 
-  int addPeople(String idEvent,int people, double price, int peopleMax, String? idUser ) {
+  //Update data in firestore
+  int addPerson(String idEvent,int people, double price, int peopleMax, String? idUser ) {
     if(people >= peopleMax){
       return -1;
     }else{
-    //si le nombre de personne et supérieur en personne on fait une alerte
-    //si peut s'inscrire : nombre de personne +1, price / numbre de personne, add id de l'event à la table du user
-
 
     var newNumberOfPeople = people+1;
     var newPrice = price/people;
@@ -256,8 +250,10 @@ List<String> eventsByUser = [];
       FirebaseFirestore.instance.collection('events').doc(idEvent).update({
         'numberOfPeople' : newNumberOfPeople,
         'price' : newPrice,
+      // ignore: avoid_print
       }).then((value) => print('data update'));
     }catch(e) {
+      // ignore: avoid_print
       print(e.toString());
     }
       try{

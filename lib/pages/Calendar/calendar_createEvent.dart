@@ -9,8 +9,6 @@ import 'package:projectmaster/widgets/appBar.dart';
 */
 
 const dhint = 'Choose';
-enum CoursType { HP, BC }
-enum SportType { Ski, Snowboard }
 
 enum CoursType { HP, BC }
 
@@ -25,7 +23,6 @@ class AddEvent extends StatefulWidget {
 
 @override
 class _AddEventState extends State<AddEvent> {
-
   final activityController = TextEditingController();
 
   @override
@@ -34,30 +31,28 @@ class _AddEventState extends State<AddEvent> {
     super.dispose();
   }
 
-
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
 
   String getDateStartEvent() {
     return DateFormat('MM/dd/yyyy').format(startDate);
   }
+
   String getDateEndEvent() {
     return DateFormat('MM/dd/yyyy').format(endDate);
-
   }
 
   late VoidCallback onClicked;
-
 
   String? activity;
   String? additionalInfo = 'Come in large numbers';
   String? language = 'English';
   int numberOfPeople = 0;
   int numberOfPeopleMax = 50;
-  String picture = 'https://www.snowmagazine.com/images/ski-resorts/switzerland/villars-604914-resort.jpg';
+  String picture =
+      'https://www.snowmagazine.com/images/ski-resorts/switzerland/villars-604914-resort.jpg';
   double price = 2000;
   String? location;
-  
 
 // declare constant for drop-down menus
   static const stationItems = <String>['Verbier', 'Montana', 'Villar'];
@@ -65,10 +60,6 @@ class _AddEventState extends State<AddEvent> {
   static const activityItems = <String>['Rando', 'Free'];
   static const sportItems = <String>['Ski', 'Snowboard'];
   static const langueItems = <String>['English', 'Français'];
-
-//Values for radio buttons
-  CoursType? _coursType = CoursType.HP;
-  SportType? _sportType = SportType.Ski;
 
 //Values for radio buttons
   CoursType? _coursType = CoursType.HP;
@@ -84,7 +75,7 @@ class _AddEventState extends State<AddEvent> {
       )
       .toList();
 
-      final List<DropdownMenuItem<String>> _dropDownStationItems = stationItems
+  final List<DropdownMenuItem<String>> _dropDownStationItems = stationItems
       .map(
         (String value) => DropdownMenuItem<String>(
           value: value,
@@ -92,7 +83,6 @@ class _AddEventState extends State<AddEvent> {
         ),
       )
       .toList();
-
 
   @override
   Widget build(BuildContext context) {
@@ -105,19 +95,17 @@ class _AddEventState extends State<AddEvent> {
                 title: const Text('Date'),
                 textColor: Colors.black,
                 trailing: TextButton(
-
                   onPressed: () => pickDateAddEvent(context),
                   child: Text(getDateStartEvent()),
                 )),
 
-          ListTile(
+            ListTile(
                 leading: const Icon(Icons.calendar_month),
                 title: const Text('Date'),
                 textColor: Colors.black,
                 trailing: TextButton(
                   onPressed: () => pickDateEndEvent(context),
                   child: Text(getDateEndEvent()),
-
                 )),
             ListTile(
               leading: const Icon(Icons.local_activity),
@@ -133,7 +121,7 @@ class _AddEventState extends State<AddEvent> {
                 items: _dropDownActivityItems,
               ),
             ),
-             ListTile(
+            ListTile(
               leading: const Icon(Icons.location_city),
               title: const Text('Location'),
               trailing: DropdownButton<String>(
@@ -151,7 +139,6 @@ class _AddEventState extends State<AddEvent> {
             const ListTile(
               leading: Icon(Icons.table_chart),
               title: Text('Cours Type'),
-              
             ),
             ListTile(
               title: const Text('HP'),
@@ -213,29 +200,26 @@ class _AddEventState extends State<AddEvent> {
               child: const Icon(Icons.add),
               onPressed: () async {
                 FirebaseFirestore.instance.collection('events').add({
-
                   'activity': activity,
                   'startEvent': startDate,
-                  'endEvent' : endDate,
+                  'endEvent': endDate,
                   'course': _coursType.toString(),
                   'sport': _sportType.toString(),
                   'language': language,
                   'location': location,
                   'numberOfPeople': numberOfPeople,
-                  'numberOfPeopleMax' : numberOfPeopleMax,
+                  'numberOfPeopleMax': numberOfPeopleMax,
                   'picture': picture,
-                  'additionalInfo' : additionalInfo,
+                  'additionalInfo': additionalInfo,
                   'price': price,
-
                 });
               },
             )
           ],
         ));
-
   }
 
- //Widget "showDatePicker" to display "startEvent"
+  //Widget "showDatePicker" to display "startEvent"
   Future pickDateAddEvent(BuildContext context) async {
     final newDate = await showDatePicker(
       context: context,
@@ -247,11 +231,10 @@ class _AddEventState extends State<AddEvent> {
     if (newDate == null) return;
 
     setState(() => startDate = newDate);
-
   }
 
 //Widget "showDatePicker" to display "endEvent"
-    Future pickDateEndEvent(BuildContext context) async {
+  Future pickDateEndEvent(BuildContext context) async {
     final newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -261,7 +244,6 @@ class _AddEventState extends State<AddEvent> {
 
     if (newDate == null) return;
 
-     setState(() => endDate = newDate);
-    
+    setState(() => endDate = newDate);
   }
 }

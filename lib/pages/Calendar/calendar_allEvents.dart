@@ -14,8 +14,6 @@ import 'calendar_detailsEvents.dart';
 class CalendarDisplay extends StatefulWidget {
   final String? uId;
 
-  CalendarDisplay(this.uId);
-
   // ignore: use_key_in_widget_constructors
   const CalendarDisplay(this.uId);
   @override
@@ -23,14 +21,13 @@ class CalendarDisplay extends StatefulWidget {
 }
 
 class CalendarDisplayState extends State<CalendarDisplay> {
+  MeetingDataSource? events;
+  var userRole;
+  var id;
+  var userName;
 
- MeetingDataSource? events;    
- var userRole;
- var id;
- var userName;
- 
- final databaseReference = FirebaseFirestore.instance;
- 
+  final databaseReference = FirebaseFirestore.instance;
+
   @override
   void initState() {
     getDataFromFireStore().then((results) {
@@ -47,30 +44,26 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     super.initState();
   }
 
-   
   // Retrieve the "events" collection from firestore in a list
   Future<void> getDataFromFireStore() async {
     var snapShotsValue = await databaseReference.collection("events").get();
 
     List<EventsModel> list = snapShotsValue.docs
         .map((e) => EventsModel(
-
-            id: e.id,
-            activity: e.data()['activity'].toString(),
-            startEvent :e.data()['startEvent'].toDate(),
-            endEvent : e.data()['endEvent'].toDate(),
-            aditionalInfo : e.data()['aditionalInfo'].toString(),
-             course : e.data()['course'].toString(),
-              language : e.data()['language'].toString(),
-               location : e.data()['location'].toString(),
-                price : e.data()['price'].toDouble(),
-                sport : e.data()['sport'].toString(),
-                numberOfPeopleMax : e.data()['numberOfPeopleMax'],
-                numberOfPeople : e.data()['numberOfPeople'],
-                 picture : e.data()['picture'],
-                ))
-               
-
+              id: e.id,
+              activity: e.data()['activity'].toString(),
+              startEvent: e.data()['startEvent'].toDate(),
+              endEvent: e.data()['endEvent'].toDate(),
+              aditionalInfo: e.data()['aditionalInfo'].toString(),
+              course: e.data()['course'].toString(),
+              language: e.data()['language'].toString(),
+              location: e.data()['location'].toString(),
+              price: e.data()['price'].toDouble(),
+              sport: e.data()['sport'].toString(),
+              numberOfPeopleMax: e.data()['numberOfPeopleMax'],
+              numberOfPeople: e.data()['numberOfPeople'],
+              picture: e.data()['picture'],
+            ))
         .toList();
 
     setState(() {
@@ -78,42 +71,38 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     });
   }
 
-
-  // Retrieve "role" and "id" the "users" collection from firestore 
-Future<void> getUserRole(uId) async {
-
+  // Retrieve "role" and "id" the "users" collection from firestore
+  Future<void> getUserRole(uId) async {
     FirebaseFirestore.instance
         .collection("users")
         .where("uId", isEqualTo: uId)
         .get()
         .then((value) => {
-
-           // ignore: unnecessary_null_comparison
-           if (value != null)
-           {    
-            userRole = value.docs.first.data()['role'].toString(),
-            id = value.docs.first.id,
-           }else{
-            // ignore: avoid_print
-            print('Document does not exist on the database'),
-           }
-        });
-}
-
+              // ignore: unnecessary_null_comparison
+              if (value != null)
+                {
+                  userRole = value.docs.first.data()['role'].toString(),
+                  id = value.docs.first.id,
+                }
+              else
+                {
+                  // ignore: avoid_print
+                  print('Document does not exist on the database'),
+                }
+            });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
 
-      body : Center(
-
+      body: Center(
         //Use library syncfusion_flutter_calendar to build Calendar
-         child : SfCalendar(
-                view: CalendarView.month,
-                firstDayOfWeek: 1,
-                onTap: calendarTapped,   
-
+        child: SfCalendar(
+          view: CalendarView.month,
+          firstDayOfWeek: 1,
+          onTap: calendarTapped,
           dataSource: events,
           allowedViews: const [
             CalendarView.month,
@@ -126,65 +115,58 @@ Future<void> getUserRole(uId) async {
             CalendarView.timelineMonth,
             CalendarView.schedule
           ],
-
           monthViewSettings: const MonthViewSettings(
             showAgenda: true,
             agendaViewHeight: 300,
             showTrailingAndLeadingDates: false,
           ),
-
           todayHighlightColor: Colors.cyan,
+        ),
+      ),
 
-         ),
-         ),
-         
-         //Do not let the user add an event
-         floatingActionButton: FloatingActionButton(
+      //Do not let the user add an event
+      floatingActionButton: FloatingActionButton(
           onPressed: () {
-
-          if(userRole == 'client'){
-            showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: const Text('No access'),
-                content: const Text('Sorry, you can not add on event'),
-                actions: <Widget>[
-                  TextButton(onPressed: () =>
-                   Navigator.pop(context, 'OK'),
-                   child: const Text('OK'),
-                  ),
-                ],
-              )
-            );
-
-          }else{
-         Navigator.push(
-          
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddEvent(),           
-                    ));
-          }
-         },
-        backgroundColor: Colors.cyan,
-        child : const Icon(Icons.add)
-         ),
-         
+            if (userRole == 'client') {
+              showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: const Text('No access'),
+                        content: const Text('Sorry, you can not add on event'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ));
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddEvent(),
+                  ));
+            }
+          },
+          backgroundColor: Colors.cyan,
+          child: const Icon(Icons.add)),
     );
   }
-  
-  // Access the details of an event by taking the fields with
-  void calendarTapped(CalendarTapDetails calendarTapDetails, ) {
-  if (calendarTapDetails.targetElement == CalendarElement.appointment) {
 
+  // Access the details of an event by taking the fields with
+  void calendarTapped(
+    CalendarTapDetails calendarTapDetails,
+  ) {
+    if (calendarTapDetails.targetElement == CalendarElement.appointment) {
       EventsModel appointmentDetails = calendarTapDetails.appointments![0];
 
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ManageEvent(eventDetails:appointmentDetails, uId: id)),
-    );
-
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                ManageEvent(eventDetails: appointmentDetails, uId: id)),
+      );
+    }
   }
 }
 

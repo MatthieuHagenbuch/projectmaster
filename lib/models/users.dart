@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class User {
   String? email;
   String? uId;
   String? role;
+
 
   ///Constructor
   User({this.email, this.uId, this.role = 'user'});
@@ -29,3 +32,4 @@ Map<String, dynamic> _eventToJson(User instance) => <String, dynamic>{
       'uId': instance.uId,
       'role': instance.role,
     };
+

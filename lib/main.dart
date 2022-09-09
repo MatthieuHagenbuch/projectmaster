@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:projectmaster/Authentication/AuthGate.dart';
+import 'package:projectmaster/pages/Authentification/AuthGate.dart';
 import 'firebase_options.dart';
-import 'package:projectmaster/pages/calendar_main.dart';
+
 
 //Method DevMatt
 /*Future<void> main() async {
@@ -36,7 +36,6 @@ class _MyAppState extends State<MyApp> {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Slide - Ride',
-      //home: CalendarPage(),
       home: AuthGate(),
     );
   }

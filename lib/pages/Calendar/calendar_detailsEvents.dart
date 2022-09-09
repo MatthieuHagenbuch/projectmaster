@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -9,8 +12,10 @@ import 'package:transparent_image/transparent_image.dart'
 show kTransparentImage;
 class ManageEvent extends StatelessWidget {
 
+final String? uId;
 EventsModel? eventDetails;
-ManageEvent({this.eventDetails});
+ManageEvent({this.eventDetails, required this.uId});
+List<String> eventsByUser = [];
 
  @override
   Widget build(BuildContext context) {
@@ -163,6 +168,16 @@ ManageEvent({this.eventDetails});
             eventDetails!.numberOfPeopleMax.toString(),
         ),
         ),
+        
+         ListTile(
+          contentPadding: const EdgeInsets.all(5),
+          leading: const Icon(Icons.people),
+            title: const Text('Subscribe'),
+
+          subtitle: Text(
+            eventDetails!.numberOfPeople.toString(),
+        ),
+        ),
         ListTile(
           contentPadding: const EdgeInsets.all(5),
           leading: const Icon(Icons.info),
@@ -172,13 +187,89 @@ ManageEvent({this.eventDetails});
             eventDetails!.aditionalInfo,
         ),
         ),
+
+
         const Divider(
           height: 1.0,
           thickness: 1,
         ),
+         
             ],
+            
         ),
-       )
+        
+       ),
+       floatingActionButton: FloatingActionButton.extended(onPressed: (){
+        var result = addPeople(eventDetails!.id,eventDetails!.numberOfPeople, 
+        eventDetails!.price, eventDetails!.numberOfPeopleMax, uId);
+        switch (result){
+          case (-1) :
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Sorry this event is full'),
+                actions: <Widget>[
+                  TextButton(onPressed: () =>
+                   Navigator.pop(context, 'OK'),
+                   child: const Text('OK'),
+                  ),
+                ],
+              )
+            );
+            break;
+            case(1) :
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Thank you for your subscribe'),
+                content: const Text('Thank you for your registration. You can find the different information about your registration under the tab "My reservations" '),
+                actions: <Widget>[
+                  TextButton(onPressed: () =>
+                   Navigator.pop(context, 'OK'),
+                   child: const Text('OK'),
+                  ),
+                ],
+              )
+            );
+        }
+          },
+        label: Text('Subscribe'),
+        backgroundColor: Colors.cyan
+    ),
     );
+    
+  }
+
+  int addPeople(String idEvent,int people, double price, int peopleMax, String? idUser ) {
+    if(people >= peopleMax){
+      return -1;
+    }else{
+    //si le nombre de personne et supérieur en personne on fait une alerte
+    //si peut s'inscrire : nombre de personne +1, price / numbre de personne, add id de l'event à la table du user
+
+
+    var newNumberOfPeople = people+1;
+    var newPrice = price/people;
+    eventsByUser.add(idEvent);
+  
+    try{
+      FirebaseFirestore.instance.collection('events').doc(idEvent).update({
+        'numberOfPeople' : newNumberOfPeople,
+        'price' : newPrice,
+      }).then((value) => print('data update'));
+    }catch(e) {
+      print(e.toString());
+    }
+      try{
+        //récupérer l'id
+         FirebaseFirestore.instance.collection('users').doc(idUser).update({
+          'reservations' : FieldValue.arrayUnion([idEvent]),
+                
+      }).then((value) => print('data update'));
+    }catch(e) {
+      print(e.toString());
+    }
+    }
+    return 1;
   }
 }

@@ -1,3 +1,5 @@
+# Simple user guide
+
 - Install the app via Google Play Store
 - Register or login if you already have an account
 - The default user role is "client", who can subscribe to available events

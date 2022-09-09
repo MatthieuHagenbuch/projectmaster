@@ -12,6 +12,10 @@ const dhint = 'Choose';
 enum CoursType { HP, BC }
 enum SportType { Ski, Snowboard }
 
+enum CoursType { HP, BC }
+
+enum SportType { Ski, Snowboard }
+
 class AddEvent extends StatefulWidget {
   const AddEvent({Key? key}) : super(key: key);
 
@@ -30,6 +34,7 @@ class _AddEventState extends State<AddEvent> {
     super.dispose();
   }
 
+
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
 
@@ -38,9 +43,11 @@ class _AddEventState extends State<AddEvent> {
   }
   String getDateEndEvent() {
     return DateFormat('MM/dd/yyyy').format(endDate);
+
   }
 
   late VoidCallback onClicked;
+
 
   String? activity;
   String? additionalInfo = 'Come in large numbers';
@@ -54,7 +61,14 @@ class _AddEventState extends State<AddEvent> {
 
 // declare constant for drop-down menus
   static const stationItems = <String>['Verbier', 'Montana', 'Villar'];
+
   static const activityItems = <String>['Rando', 'Free'];
+  static const sportItems = <String>['Ski', 'Snowboard'];
+  static const langueItems = <String>['English', 'Français'];
+
+//Values for radio buttons
+  CoursType? _coursType = CoursType.HP;
+  SportType? _sportType = SportType.Ski;
 
 //Values for radio buttons
   CoursType? _coursType = CoursType.HP;
@@ -79,6 +93,7 @@ class _AddEventState extends State<AddEvent> {
       )
       .toList();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +105,7 @@ class _AddEventState extends State<AddEvent> {
                 title: const Text('Date'),
                 textColor: Colors.black,
                 trailing: TextButton(
+
                   onPressed: () => pickDateAddEvent(context),
                   child: Text(getDateStartEvent()),
                 )),
@@ -101,6 +117,7 @@ class _AddEventState extends State<AddEvent> {
                 trailing: TextButton(
                   onPressed: () => pickDateEndEvent(context),
                   child: Text(getDateEndEvent()),
+
                 )),
             ListTile(
               leading: const Icon(Icons.local_activity),
@@ -190,11 +207,13 @@ class _AddEventState extends State<AddEvent> {
             ),
 
             //button to add value in firestore in "events" collection
+
             FloatingActionButton(
               backgroundColor: Colors.cyan,
               child: const Icon(Icons.add),
               onPressed: () async {
                 FirebaseFirestore.instance.collection('events').add({
+
                   'activity': activity,
                   'startEvent': startDate,
                   'endEvent' : endDate,
@@ -207,11 +226,13 @@ class _AddEventState extends State<AddEvent> {
                   'picture': picture,
                   'additionalInfo' : additionalInfo,
                   'price': price,
+
                 });
               },
             )
           ],
         ));
+
   }
 
  //Widget "showDatePicker" to display "startEvent"
@@ -226,7 +247,7 @@ class _AddEventState extends State<AddEvent> {
     if (newDate == null) return;
 
     setState(() => startDate = newDate);
-    
+
   }
 
 //Widget "showDatePicker" to display "endEvent"

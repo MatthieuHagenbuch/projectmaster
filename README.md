@@ -1,20 +1,10 @@
-# projectmaster
+# README
 
-A new Flutter project.
+You can find the whole project on [gitHub](https://github.com/MatthieuHagenbuch/projectmaster).
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For technical informations please read the technical guide
 
 ## About this project
+This project is an attempt for the module "FIG 645-2" in the HES-SO Valais
 
-
+Tapparel Océane & Hagenbuch Matthieu

@@ -10,7 +10,7 @@ You can find the whole project on [gitHub](https://github.com/MatthieuHagenbuch/
 - client user : oceane@test.com (password: 123456)
 
 ## Development team
-- Océane Tapparel : @ocetapp on gitHub
+- Tapparel Océane : @ocetapp on gitHub
 - Hagenbuch Matthieu : @MatthieuHagenbuch on gitHub
 
 ## Specification / Technology

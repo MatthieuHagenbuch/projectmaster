@@ -262,8 +262,8 @@ List<String> eventsByUser = [];
     }
       try{
         //récupérer l'id
-         FirebaseFirestore.instance.collection('users').doc(idUser).update({
-          'reservations' : FieldValue.arrayUnion([idEvent]),
+         FirebaseFirestore.instance.collection('events').doc(idEvent).update({
+          'subscriber' : FieldValue.arrayUnion([idUser]),
                 
       }).then((value) => print('data update'));
     }catch(e) {

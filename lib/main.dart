@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:projectmaster/pages/Authentification/AuthGate.dart';
+import 'package:projectmaster/pages/Calendar/calendar_createEvent.dart';
+import 'package:projectmaster/pages/Reservation/reservation_allReservation.dart';
 import 'firebase_options.dart';
 
 
@@ -37,6 +39,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Slide - Ride',
       home: AuthGate(),
+      //home: AllEventsDisplay(),
+      //home: AddEvent(),
     );
   }
 }

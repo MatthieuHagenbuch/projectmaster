@@ -52,6 +52,7 @@ class CalendarDisplayState extends State<CalendarDisplay> {
     super.initState();
   }
    var pickId;
+   
   Future<void> getDataFromFireStore() async {
     var snapShotsValue = await databaseReference
         .collection("events")
@@ -72,7 +73,7 @@ class CalendarDisplayState extends State<CalendarDisplay> {
                 numberOfPeopleMin : e.data()['numberOfPeopleMin'],
                 numberOfPeopleMax : e.data()['numberOfPeopleMax'],
                 numberOfPeople : e.data()['numberOfPeople'],
-                
+                 picture : e.data()['picture'],
                 ))
                
         .toList();

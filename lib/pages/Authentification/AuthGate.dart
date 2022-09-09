@@ -1,11 +1,8 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:projectmaster/pages/Authentification/addUser.dart';
 import 'package:projectmaster/pages/Calendar/calendar_allEvents.dart';
-
-import '../../main.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key}) : super(key: key);
@@ -38,7 +35,7 @@ class AuthGate extends StatelessWidget {
         addUser(FirebaseAuth.instance.currentUser?.email,
             FirebaseAuth.instance.currentUser?.uid);
 
-        // Render your application if authenticated
+        // Render the application if authenticated
         return CalendarDisplay(FirebaseAuth.instance.currentUser?.uid);
       },
     );

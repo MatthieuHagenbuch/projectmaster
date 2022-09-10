@@ -221,7 +221,7 @@ List<String> eventsByUser = [];
                 content: const Text('Thank you for your registration. You can find the different information about your registration under the tab "My reservations" '),
                 actions: <Widget>[
                   TextButton(onPressed: () =>
-                   Navigator.pop(context, CalendarDisplay(uId)),
+                   Navigator.pop(context, 'OK'),
                    child: const Text('OK'),
                   ),
                 ],

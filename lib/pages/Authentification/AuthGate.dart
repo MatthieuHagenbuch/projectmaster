@@ -4,6 +4,10 @@ import 'package:flutterfire_ui/auth.dart';
 import 'package:projectmaster/pages/Authentification/addUser.dart';
 import 'package:projectmaster/pages/Calendar/calendar_allEvents.dart';
 
+/*
+ Author : Matthieu
+ Login management
+*/
 class AuthGate extends StatelessWidget {
   const AuthGate({Key? key}) : super(key: key);
 

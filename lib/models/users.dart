@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/*
+ Author : Matthieu
+ Model to User collection
+*/
 class User {
   String? email;
   String? uId;

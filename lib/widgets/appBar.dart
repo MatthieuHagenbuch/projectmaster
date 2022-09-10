@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projectmaster/pages/Authentification/AuthGate.dart';
 import 'package:projectmaster/pages/Calendar/calendar_allEvents.dart';
 
 import 'package:projectmaster/pages/Settings/settings_details.dart';
@@ -56,6 +57,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             switch (value) {
               case 0:
                 signOut();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AuthGate(),
+                    ));
                 break;
 
               case 1:
